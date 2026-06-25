@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -13,17 +14,18 @@ class ArticleController extends Controller implements HasMiddleware
 {
 
     public static function middleware()
-    {
-        return [
-            new Middleware('auth', except: ['index', 'show']),
-        ];
-    }
+{
+    return [
+        new Middleware('auth', except: ['index', 'show', 'byCategory', 'byUser']),
+    ];
+}
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $articles = Article::orderBy('created_at', 'desc')->get();
+        return view('article.index', compact('articles'));
     }
 
     /**
@@ -63,9 +65,13 @@ class ArticleController extends Controller implements HasMiddleware
      */
     public function show(Article $article)
     {
-        //
+        return view('article.show', compact('article'));
     }
-
+    public function byCategory(Category $category)
+    {
+        $articles = $category->articles()->orderBy('created_at', 'desc')->get();
+        return view('article.by-category', compact('category', 'articles'));
+    }
     /**
      * Show the form for editing the specified resource.
      */

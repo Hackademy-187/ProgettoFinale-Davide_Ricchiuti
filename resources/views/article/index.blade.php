@@ -1,16 +1,8 @@
 <x-layout>
-
-    @if (session('message'))
-        <div class="alert alert-success">
-            {{ session('message') }}
-        </div>
-    @endif
-
-
     <div class="container-fluid p-5 bg-secondary-subtle text-center">
         <div class="row justify-content-center">
             <div class="col-12">
-                <h1 class="display-1">The Aulab Post</h1>
+                <h1 class="display-1">Tutti gli articoli</h1>
             </div>
         </div>
     </div>
@@ -31,9 +23,9 @@
                             </p>
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center">
-                            <p>Redatto il: {{ $article->created_at->format('d/m/Y') }}</p>
-                            <p>{{ $article->user->name }}</p>
-                            <a href="#" class="btn btn-outline-secondary">Leggi</a>
+                            <p>Redatto il: {{ $article->created_at->format('d/m/Y') }} <br>
+                                da {{ $article->user->name }}</p>
+                            <a href="{{ route('article.show', $article) }}" class="btn btn-outline-secondary">Leggi</a>
                         </div>
                     </div>
                 </div>
