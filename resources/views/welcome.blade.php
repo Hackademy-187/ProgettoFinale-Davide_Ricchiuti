@@ -5,7 +5,11 @@
             {{ session('message') }}
         </div>
     @endif
-
+    @if (session('alert'))
+        <div class="alert alert-danger">
+            {{ session('alert') }}
+        </div>
+    @endif
 
     <div class="container-fluid p-5 bg-secondary-subtle text-center">
         <div class="row justify-content-center">

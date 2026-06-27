@@ -29,4 +29,24 @@
             </div>
         </div>
     </div>
+    @auth
+        @if (Auth::user()->is_revisor)
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 d-flex justify-content-around">
+                        <form action="{{ route('revisor.acceptArticle', compact('article')) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" class="btn btn-success">Accetta l'articolo</button>
+                        </form>
+                        <form action="{{ route('revisor.rejectArticle', compact('article')) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" class="btn btn-danger">Rifiuta l'articolo</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endauth
 </x-layout>

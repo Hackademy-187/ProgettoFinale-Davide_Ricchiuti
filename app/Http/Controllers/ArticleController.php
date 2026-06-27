@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -22,11 +23,11 @@ class ArticleController extends Controller implements HasMiddleware
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $articles = Article::orderBy('created_at', 'desc')->get();
-        return view('article.index', compact('articles'));
-    }
+  public function index()
+{
+    $articles = Article::where('is_accepted', true)->orderBy('created_at', 'desc')->get();
+    return view('article.index', compact('articles'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -67,11 +68,16 @@ class ArticleController extends Controller implements HasMiddleware
     {
         return view('article.show', compact('article'));
     }
-    public function byCategory(Category $category)
-    {
-        $articles = $category->articles()->orderBy('created_at', 'desc')->get();
-        return view('article.by-category', compact('category', 'articles'));
-    }
+   public function byCategory(Category $category){
+    $articles = $category->articles()->where('is_accepted', true)->orderBy('created_at', 'desc')->get();
+    return view('article.by-category', compact('category', 'articles'));
+}
+
+public function byUser(User $user){
+    $articles = $user->articles()->where('is_accepted', true)->orderBy('created_at', 'desc')->get();
+    return view('article.by-user', compact('user', 'articles'));
+}
+
     /**
      * Show the form for editing the specified resource.
      */

@@ -39,12 +39,28 @@
                         <a class="nav-link active" aria-current="page" href="{{ route('article.index') }}">Tutti gli
                             articoli</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ route('careers') }}">Lavora con noi</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             Ciao {{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu">
+                            @if (Auth::user()->is_admin)
+                                <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Dashboard Admin</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                            @endif
+                            @if (Auth::user()->is_revisor)
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('revisor.dashboard') }}">
+                                        Dashboard Revisor
+                                    </a>
+                                </li>
+                            @endif
                             <li>
                                 <a class="dropdown-item" href="#"
                                     onclick="event.preventDefault(); document.querySelector('#form-logout').submit();">Logout</a>
