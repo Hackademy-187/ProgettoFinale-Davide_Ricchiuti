@@ -34,3 +34,4 @@ Route::middleware('admin')->group(function () {
     Route::patch('/admin/set-revisor/{user}', [AdminController::class, 'setRevisor'])->name('admin.setRevisor');
     Route::patch('/admin/set-writer/{user}', [AdminController::class, 'setWriter'])->name('admin.setWriter');
 });
+Route::get('/article/search', [ArticleController::class, 'articleSearch'])->name('article.search');
