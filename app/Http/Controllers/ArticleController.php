@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller implements HasMiddleware
 
@@ -98,7 +99,13 @@ public function byUser(User $user){
      */
     public function edit(Article $article)
     {
-        //
+{
+    if(Auth::user()->id == $article->user_id){
+        return view('article.edit', compact('article'));
+    }
+
+    return redirect()->route('homepage')->with('alert', 'Azione non consentita');
+}
     }
 
     /**
@@ -106,16 +113,63 @@ public function byUser(User $user){
      */
     public function update(Request $request, Article $article)
     {
-        //
+        
+{
+    $request->validate([
+        'title' => 'required|min:5|unique:articles,title,' . $article->id,
+        'subtitle' => 'required|min:5',
+        'body' => 'required|min:10',
+        'image' => 'image',
+        'category' => 'required',
+        'tags' => 'required'
+    ]);
+
+    $article->update([
+        'title' => $request->title,
+        'subtitle' => $request->subtitle,
+        'body' => $request->body,
+        'category_id' => $request->category,
+    ]);
+
+    if($request->image){
+        Storage::delete($article->image);
+        $article->update([
+            'image' => $request->file('image')->store('images', 'public')
+        ]);
+    }
+
+    $tags = explode(', ', $request->tags);
+
+    foreach($tags as $i => $tag){
+        $tags[$i] = trim($tag);
+    }
+
+    $newTags = [];
+
+    foreach($tags as $tag){
+        $newTag = Tag::updateOrCreate([
+            'name' => strtolower($tag)
+        ]);
+        $newTags[] = $newTag->id;
+    }
+    $article->tags()->sync($newTags);
+    
+    return redirect(route('writer.dashboard'))->with('message', 'Articolo modificato con successo');
+}
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Article $article)
-    {
-        //
+{
+    foreach ($article->tags as $tag) {
+        $article->tags()->detach($tag);
     }
+    
+    $article->delete();
+    return redirect()->back()->with('message', 'Articolo cancellato con successo');
+}
 
 public function articleSearch(Request $request)
 {
@@ -124,5 +178,7 @@ public function articleSearch(Request $request)
     
     return view('article.search-index', compact('articles', 'query'));
 }
+
+
 
 }
