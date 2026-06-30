@@ -6,11 +6,19 @@
             </div>
         </div>
     </div>
+
     @if (session('message'))
-        <div class="alert alert-success">
-            {{ session('message') }}
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                </div>
+            </div>
         </div>
     @endif
+
     <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-12">
@@ -34,6 +42,34 @@
             <div class="col-12">
                 <h2>Richieste per il ruolo di redattore</h2>
                 <x-requests-table :roleRequests="$writerRequests" role="redattore" />
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <h2>Tutti i tags</h2>
+                <x-metainfo-table :metaInfos="$tags" metaType="Tags" />
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2>Tutte le categorie</h2>
+                    <form action="{{ route('admin.storeCategory') }}" method="POST" class="w-50 d-flex m-2">
+                        @csrf
+                        <input type="text" name="name" class="form-control me-2"
+                            placeholder="Inserisci una nuova categoria">
+                        <button type="submit" class="btn btn-outline-secondary">Inserisci</button>
+                    </form>
+                </div>
+                <x-metainfo-table :metaInfos="$categories" metaType="categorie" />
             </div>
         </div>
     </div>

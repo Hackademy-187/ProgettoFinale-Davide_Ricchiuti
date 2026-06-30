@@ -18,6 +18,19 @@
                             <h5 class="card-title">{{ $article->title }}</h5>
                             <p class="card-subtitle">{{ $article->subtitle }}</p>
                         </div>
+                        @if ($article->category)
+                            <p class="small text-muted">Categoria:
+                                <a href="{{ route('article.byCategory', ['category' => $article->category->id]) }}"
+                                    class="text-capitalize text-muted">{{ $article->category->name }}</a>
+                            </p>
+                        @else
+                            <p class="small text-muted">Nessuna categoria</p>
+                        @endif
+                        <p class="card-text text-muted small">
+                            @foreach ($article->tags as $tag)
+                                #{{ $tag->name }}
+                            @endforeach
+                        </p>
                         <div class="card-footer d-flex justify-content-between align-items-center">
                             <p>Redatto il: {{ $article->created_at->format('d/m/Y') }} <br> da
                                 {{ $article->user->name }}</p>

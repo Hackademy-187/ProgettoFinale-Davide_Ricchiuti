@@ -33,4 +33,9 @@ public function toSearchableArray()
             'category' => $this->category?->name,
         ];
         }
+
+        public function tags()
+{
+    return $this->belongsToMany(Tag::class);
+}
 }

@@ -14,14 +14,24 @@
                     alt="Immagine dell'articolo: {{ $article->title }}">
                 <div class="text-center">
                     <h2>{{ $article->subtitle }}</h2>
-                    <p class="h6">Categoria:
-                        <a href="{{ route('article.byCategory', $article->category) }}"
-                            class="text-capitalize fw-bold text-muted">{{ $article->category->name }}</a>
-                    </p>
+                    @if ($article->category)
+                        <p class="text-muted">Categoria:
+                            <a href="{{ route('article.byCategory', ['category' => $article->category->id]) }}"
+                                class="text-capitalize fst-italic text-muted">{{ $article->category->name }}</a>
+                        </p>
+                    @else
+                        <p class="text-muted">Nessuna categoria</p>
+                    @endif
                     <div class="text-muted my-3">
                         <p>Redatto il: {{ $article->created_at->format('d/m/Y') }} da {{ $article->user->name }}</p>
+                        <p class="small text-muted my-0">
+                            @foreach ($article->tags as $tag)
+                                #{{ $tag->name }}
+                            @endforeach
+                        </p>
                     </div>
                 </div>
+
                 <p>{{ $article->body }}</p>
                 <div class="text-center">
                     <a href="{{ route('article.index') }}" class="text-secondary">Vai alla lista degli articoli</a>

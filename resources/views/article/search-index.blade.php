@@ -17,11 +17,18 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $article->title }}</h5>
                             <p class="card-subtitle">{{ $article->subtitle }}</p>
-                            <p class="small text-muted">Categoria:
-                                <a href="{{ route('article.byCategory', ['category' => $article->category]) }}"
-                                    class="text-capitalize text-muted">
-                                    {{ $article->category->name }}
-                                </a>
+                            @if ($article->category)
+                                <p class="small text-muted">Categoria:
+                                    <a href="{{ route('article.byCategory', ['category' => $article->category->id]) }}"
+                                        class="text-capitalize text-muted">{{ $article->category->name }}</a>
+                                </p>
+                            @else
+                                <p class="small text-muted">Nessuna categoria</p>
+                            @endif
+                            <p class="card-text text-muted small">
+                                @foreach ($article->tags as $tag)
+                                    #{{ $tag->name }}
+                                @endforeach
                             </p>
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center">
