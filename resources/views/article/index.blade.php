@@ -11,6 +11,7 @@
         <div class="row justify-content-evenly">
             @foreach ($articles as $article)
                 <div class="col-12 col-md-3">
+                    <x-artcle-card :article="$article" />
                     <div class="card" style="width: 18rem;">
                         <img src="{{ Storage::url($article->image) }}" class="card-img-top"
                             alt="Immagine dell'articolo: {{ $article->title }}">
