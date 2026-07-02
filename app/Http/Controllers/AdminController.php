@@ -60,6 +60,7 @@ public function deleteTag(Tag $tag){
 }
 
 public function editCategory(Request $request, Category $category){
+  
     $request->validate([
         'name' => 'required|unique:categories',
     ]);
