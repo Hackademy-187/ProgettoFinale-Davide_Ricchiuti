@@ -18,12 +18,20 @@
                         <label for="title" class="form-label">Titolo:</label>
                         <input type="text" name="title" class="form-control" id="title"
                             value="{{ $article->title }}">
+                        @error('title')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+
+
                     </div>
 
                     <div class="mb-3">
                         <label for="subtitle" class="form-label">Sottotitolo:</label>
                         <input type="text" name="subtitle" class="form-control" id="subtitle"
                             value="{{ $article->subtitle }}">
+                        @error('subtitle')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
@@ -32,16 +40,24 @@
                             class="w-25 d-block mb-2">
                         <label for="image" class="form-label">Nuova immagine:</label>
                         <input type="file" name="image" class="form-control" id="image">
+                        @error('image')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+
                     </div>
 
                     <div class="mb-3">
                         <label for="category" class="form-label">Categoria:</label>
-                        <select name="category_id" id="category" class="form-control text-capitalize">
+                        <select name="category" id="category" class="form-control text-capitalize">
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}" @if ($article->category_id == $category->id) selected @endif>
                                     {{ $category->name }}</option>
                             @endforeach
+                            @error('category')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </select>
+
                     </div>
 
                     <div class="mb-3">
@@ -54,6 +70,9 @@
                         <input name="tags" id="tags" class="form-control"
                             value="{{ $article->tags->implode('name', ', ') }}">
                         <span class="small text-muted fst-italic">Dividi ogni tag con una virgola</span>
+                        @error('tags')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <div class="mt-2">
