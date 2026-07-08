@@ -15,7 +15,7 @@
         <div class="row justify-content-center">
             <div class="col-12">
                 <h2>Articoli in attesa di revisione</h2>
-                <x-writer-table :articles="$unrevisionedArticles" />
+                <x-article-writer-table :articles="$unrevisionedArticles" />
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
         <div class="row justify-content-center">
             <div class="col-12">
                 <h2>Articoli pubblicati</h2>
-                <x-writer-table :articles="$acceptedArticles" />
+                <x-article-writer-table :articles="$acceptedArticles" />
             </div>
         </div>
     </div>
@@ -33,7 +33,7 @@
         <div class="row justify-content-center">
             <div class="col-12">
                 <h2>Articoli respinti</h2>
-                <x-writer-table :articles="$rejectedArticles" />
+                <x-article-writer-table :articles="$rejectedArticles" />
             </div>
         </div>
     </div>
